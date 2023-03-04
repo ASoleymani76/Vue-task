@@ -8,12 +8,14 @@
           <span><ArrowLeftIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
           <span><HeartIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
         </div>
-        <img src="@/assets/img/post-bg.jpg" alt="Blog Pic" class="w-full transition-all mx-auto md:max-h-[25rem] object-cover">
+        <img src="@/assets/img/post-bg.jpg" alt="Blog Pic"
+             class="w-full transition-all mx-auto md:max-h-[25rem] object-cover">
       </div>
 
       <div class="grid grid-cols-1 p-10">
         <div id="tags" class="col-span-12">
-          <span v-for="(tag,idx) in posts.tags" :key="idx" :class="idx !== 1 ? '' : 'mx-1'" class="text-violet-600 text-sm font-bold rounded-lg bg-violet-300 px-2 py-1 ">{{ tag }}</span>
+          <span v-for="(tag,idx) in posts.tags" :key="idx" :class="idx !== 1 ? '' : 'mx-1'"
+                class="text-violet-600 text-sm font-bold rounded-lg bg-violet-300 px-2 py-1 ">{{ tag }}</span>
         </div>
 
         <div id="title" class="col-span-12 mt-5">
@@ -28,7 +30,7 @@
           </span>
           <div class="flex flex-col justify-between ml-5 py-2">
             <span class="text-lg text-gray-700">By {{ posts.author }}</span>
-            <span class="text-xs text-gray-500">{{ posts.date.slice(0,10)}}</span>
+            <span class="text-xs text-gray-500">{{ posts.date.slice(0, 10) }}</span>
           </div>
         </div>
 
@@ -44,11 +46,13 @@
             <span class="text-lg font-bold text-gray-700">About the author</span>
             <span class="text-sm text-gray-500 mt-1">Joel is a hard work blogger.</span>
             <div class="flex flex-row justify-between items-center mt-4">
-              <button class="rounded-full bg-violet-700 text-white px-4 py-2 flex flex-row justify-around items-center text-sm">
+              <button
+                  class="rounded-full bg-violet-700 text-white px-4 py-2 flex flex-row justify-around items-center text-sm">
                 <CheckIcon class="fill-white w-5 h-5 mr-1"/>
                 Following
               </button>
-              <button class="rounded-full bg-transparent ml-3 px-4 py-2 flex flex-row justify-around items-center border-2 border-gray-500 text-sm">
+              <button
+                  class="rounded-full bg-transparent ml-3 px-4 py-2 flex flex-row justify-around items-center border-2 border-gray-500 text-sm">
                 <BookmarkIcon class="fill-gray-700 font-bold w-4 h-4"/>
               </button>
             </div>
@@ -56,18 +60,32 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 px-10 mt-5">
+      <div id="reply" class="grid grid-cols-1 px-10 mt-5">
         <span class="col-span-12 text-gray-700 font-bold text-3xl">Share a reply?</span>
         <textarea type="text"
                   v-model="text"
                   class="w-full rounded-xl py-2 px-4 text-sm border bg-gray-100 h-[6rem] mt-4 border-0"
                   placeholder="Your message ...">
-            </textarea>
+        </textarea>
       </div>
-    </section>
 
+      <div id="comments" class="grid grid-cols-1 px-10 mt-5">
+        <div v-for="(comment,idx) in comments" class="col-span-12 flex flex-col">
+          <div class="flex flex-row justify-start mt-5">
+          <span>
+            <AvatarIcon class="w-14 h-14"/>
+          </span>
+            <div class="flex flex-col justify-between ml-5 py-2">
+              <span class="text-lg text-gray-700">By {{ comment.username }}</span>
+              <span class="text-xs text-gray-500">{{ comment.date.slice(0, 10) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
   </div>
-<!--  <RouterView />-->
+  <!--  <RouterView />-->
 </template>
 
 <script>
@@ -81,29 +99,31 @@ import BookmarkIcon from "./components/icons/BookmarkIcon.vue";
 
 export default {
   title: 'Vue-Task - Blog',
-  components:{
+  components: {
     BookmarkIcon,
     CheckIcon,
     ArrowLeftIcon,
     HeartIcon,
     AvatarIcon
   },
-  data(){
-    return{
-      posts:null,
-      text:'',
+  data() {
+    return {
+      posts: null,
+      comments: [],
+      text: '',
     }
   },
-  async created(){
+  async created() {
     await this.getPosts();
   },
-  methods:{
-    async getPosts(){
+  methods: {
+    async getPosts() {
       try {
         let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
         this.posts = response.data;
+        this.comments = response.data.comments;
         console.log(response.data);
-      }catch (e){
+      } catch (e) {
         console.log(e)
       }
     },
