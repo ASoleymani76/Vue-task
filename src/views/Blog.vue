@@ -98,7 +98,7 @@
           <a href="#" class="text-gray-900 font-bold text-sm">About</a>
           <a href="#" class="text-gray-900 font-bold text-sm">Community</a>
         </div>
-        <div class="flex flex-row justify-around items-center mt-5">
+        <div class="flex flex-row justify-center space-x-10 items-center mt-5">
           <FacebookIcon/>
           <InstagramIcon/>
           <YoutubeIcon/>
