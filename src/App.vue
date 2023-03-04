@@ -70,7 +70,7 @@
       </div>
 
       <div id="comments" class="grid grid-cols-1 px-10 mt-5">
-        <div v-for="(comment,idx) in comments" class="col-span-12 flex flex-col">
+        <div v-for="(comment,idx) in comments" class="col-span-12 flex flex-col my-3">
           <div class="flex flex-row justify-start mt-5">
           <span>
             <AvatarIcon class="w-14 h-14"/>
@@ -80,6 +80,20 @@
               <span class="text-xs text-gray-500">{{ comment.date.slice(0, 10) }}</span>
             </div>
           </div>
+          <div class="w-full rounded-r-full rounded-bl-full py-4 px-4 text-lg text-gray-600 bg-gray-100 mt-4">
+            {{ comment.text }}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 bg-gray-100 px-10 py-5 mt-5">
+        <span class="text-gray-700 font-semibold text-lg">Company</span>
+        <div class="flex flex-row justify-between items-center mt-5">
+          <a href="#" class="text-gray-900 font-bold text-sm">About</a>
+          <a href="#" class="text-gray-900 font-bold text-sm">Community</a>
+        </div>
+        <div class="flex flex-row justify-between items-center mt-5">
+
         </div>
       </div>
 
