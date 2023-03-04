@@ -3,75 +3,8 @@
 </template>
 
 <script>
-// import { RouterLink, RouterView } from 'vue-router'
-import ArrowLeftIcon from "./components/icons/ArrowLeftIcon.vue";
-import HeartIcon from "./components/icons/HeartIcon.vue";
-import AvatarIcon from "./components/icons/AvatarIcon.vue";
-import axios from "axios";
-import CheckIcon from "./components/icons/CheckIcon.vue";
-import BookmarkIcon from "./components/icons/BookmarkIcon.vue";
-import FacebookIcon from "./components/icons/FacebookIcon.vue";
-import InstagramIcon from "./components/icons/InstagramIcon.vue";
-import YoutubeIcon from "./components/icons/YoutubeIcon.vue";
-import {BlogCreateCommentRequest} from "./libs/Api/Blog";
+import { RouterLink, RouterView } from 'vue-router'
 
-export default {
-  title: 'Vue-Task - Blog',
-  components: {
-    YoutubeIcon,
-    InstagramIcon,
-    FacebookIcon,
-    BookmarkIcon,
-    CheckIcon,
-    ArrowLeftIcon,
-    HeartIcon,
-    AvatarIcon
-  },
-  data() {
-    return {
-      posts: null,
-      comments: [],
-      text: '',
-    }
-  },
-  async created() {
-    await this.getPosts();
-  },
-  methods: {
-    async getPosts() {
-      try {
-        let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
-        this.posts = response.data;
-        this.comments = response.data.comments;
-        console.log(response.data);
-      } catch (e) {
-        console.log(e)
-      }
-    },
-    async submitComment(){
-      let _this = this;
-
-      let data = {
-        text : _this.text
-      }
-
-      let blogCreateCommentRequest = new BlogCreateCommentRequest(_this);
-      blogCreateCommentRequest.setParams(1);
-      blogCreateCommentRequest.setRequestParam(data);
-      await blogCreateCommentRequest.fetch(function (content){
-        // console.log(content)
-        _this.text = "";
-      },function (error){
-        _this.text = "";
-        console.log(error)
-      })
-    },
-    prettyTime(date){
-      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return new Date(date).toLocaleDateString("en-US", options)
-    },
-  },
-}
 </script>
 
 <style scoped>
