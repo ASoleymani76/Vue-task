@@ -1,5 +1,5 @@
 <template>
-  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl">
+  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-[500rem] shadow-xl bg-white">
 
     <section class="h-auto w-full grid grid-cols-1">
 
@@ -11,8 +11,8 @@
         <img src="@/assets/img/post-bg.jpg" alt="Blog Pic" class="w-full transition-all mx-auto md:max-h-[25rem] object-cover">
       </div>
 
-      <div id="tags" class="grid grid-cols-1 p-10">
-        <div class="col-span-12">
+      <div class="grid grid-cols-1 p-10">
+        <div id="tags" class="col-span-12">
           <span v-for="(tag,idx) in posts.tags" :key="idx" :class="idx !== 1 ? '' : 'mx-1'" class="text-violet-600 text-sm font-bold rounded-lg bg-violet-300 px-2 py-1 ">{{ tag }}</span>
         </div>
 
@@ -32,8 +32,37 @@
           </div>
         </div>
 
-        <div id="content" class="col-span-12 text-gray-600 mt-5" v-html="posts.content"></div>
+        <div id="content" class="col-span-12 text-gray-600 mt-5 md:text-justify" v-html="posts.content"></div>
+      </div>
 
+      <div class="grid grid-cols-1 bg-gray-100 px-10 py-5">
+        <div class="col-span-12 flex flex-row justify-start">
+          <span>
+            <AvatarIcon class="w-14 h-14"/>
+          </span>
+          <div class="flex flex-col justify-between ml-5 py-2">
+            <span class="text-lg font-bold text-gray-700">About the author</span>
+            <span class="text-sm text-gray-500 mt-1">Joel is a hard work blogger.</span>
+            <div class="flex flex-row justify-between items-center mt-4">
+              <button class="rounded-full bg-violet-700 text-white px-4 py-2 flex flex-row justify-around items-center text-sm">
+                <CheckIcon class="fill-white w-5 h-5 mr-1"/>
+                Following
+              </button>
+              <button class="rounded-full bg-transparent ml-3 px-4 py-2 flex flex-row justify-around items-center border-2 border-gray-500 text-sm">
+                <BookmarkIcon class="fill-gray-700 font-bold w-4 h-4"/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 px-10 mt-5">
+        <span class="col-span-12 text-gray-700 font-bold text-3xl">Share a reply?</span>
+        <textarea type="text"
+                  v-model="text"
+                  class="w-full rounded-xl py-2 px-4 text-sm border bg-gray-100 h-[6rem] mt-4 border-0"
+                  placeholder="Your message ...">
+            </textarea>
       </div>
     </section>
 
@@ -47,10 +76,14 @@ import ArrowLeftIcon from "./components/icons/ArrowLeftIcon.vue";
 import HeartIcon from "./components/icons/HeartIcon.vue";
 import AvatarIcon from "./components/icons/AvatarIcon.vue";
 import axios from "axios";
+import CheckIcon from "./components/icons/CheckIcon.vue";
+import BookmarkIcon from "./components/icons/BookmarkIcon.vue";
 
 export default {
   title: 'Vue-Task - Blog',
   components:{
+    BookmarkIcon,
+    CheckIcon,
     ArrowLeftIcon,
     HeartIcon,
     AvatarIcon
@@ -58,6 +91,7 @@ export default {
   data(){
     return{
       posts:null,
+      text:'',
     }
   },
   async created(){
@@ -72,8 +106,8 @@ export default {
       }catch (e){
         console.log(e)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
