@@ -86,7 +86,7 @@
               <span class="text-xs text-gray-500">{{ prettyTime(comment.date) }}</span>
             </div>
           </div>
-          <div class="w-full rounded-r-full rounded-bl-full py-4 px-4 text-lg text-gray-600 bg-gray-100 mt-4">
+          <div class="w-full rounded-r-full rounded-bl-full py-4 px-5 text-base text-gray-600 bg-gray-100 mt-4">
             {{ comment.text }}
           </div>
         </div>
