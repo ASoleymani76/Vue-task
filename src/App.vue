@@ -30,7 +30,7 @@
           </span>
           <div class="flex flex-col justify-between ml-5 py-2">
             <span class="text-lg text-gray-700">By {{ posts.author }}</span>
-            <span class="text-xs text-gray-500">{{ posts.date.slice(0, 10) }}</span>
+            <span class="text-xs text-gray-500">{{ prettyTime(posts.date) }}</span>
           </div>
         </div>
 
@@ -83,7 +83,7 @@
           </span>
             <div class="flex flex-col justify-between ml-5 py-2">
               <span class="text-lg text-gray-700">By {{ comment.username }}</span>
-              <span class="text-xs text-gray-500">{{ comment.date.slice(0, 10) }}</span>
+              <span class="text-xs text-gray-500">{{ prettyTime(comment.date) }}</span>
             </div>
           </div>
           <div class="w-full rounded-r-full rounded-bl-full py-4 px-4 text-lg text-gray-600 bg-gray-100 mt-4">
@@ -173,6 +173,10 @@ export default {
         _this.text = "";
         console.log(error)
       })
+    },
+    prettyTime(date){
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(date).toLocaleDateString("en-US", options)
     },
   },
 }
