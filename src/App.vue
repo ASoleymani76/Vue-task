@@ -26,11 +26,13 @@
           <span>
             <AvatarIcon class="w-14 h-14"/>
           </span>
-          <div class="flex flex-col justify-between  ml-5">
+          <div class="flex flex-col justify-between ml-5 py-2">
             <span class="text-lg text-gray-700">By {{ posts.author }}</span>
-            <span class="text-sm text-gray-500">{{ new Date(posts.date)}}</span>
+            <span class="text-xs text-gray-500">{{ posts.date.slice(0,10)}}</span>
           </div>
         </div>
+
+        <div id="content" class="col-span-12 text-gray-600 mt-5" v-html="posts.content"></div>
 
       </div>
     </section>
