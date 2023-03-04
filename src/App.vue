@@ -1,5 +1,5 @@
 <template>
-  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-[500rem] shadow-xl bg-white">
+  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl bg-white">
 
     <section class="h-auto w-full grid grid-cols-1">
 
@@ -64,9 +64,15 @@
         <span class="col-span-12 text-gray-700 font-bold text-3xl">Share a reply?</span>
         <textarea type="text"
                   v-model="text"
-                  class="w-full rounded-xl py-2 px-4 text-sm border bg-gray-100 h-[6rem] mt-4 border-0"
+                  class="w-full col-span-12 rounded-xl py-2 px-4 text-sm border bg-gray-100 h-[6rem] mt-4 border-0"
                   placeholder="Your message ...">
         </textarea>
+        <button
+            :disabled="text.length < 1"
+            @click="submitComment"
+            class="w-[10rem] rounded-full bg-violet-300 text-violet-700 font-bold px-4 py-2 flex flex-row justify-around items-center text-base mt-3 border-2 border-violet-700">
+          Submit
+        </button>
       </div>
 
       <div id="comments" class="grid grid-cols-1 px-10 mt-5">
@@ -92,8 +98,10 @@
           <a href="#" class="text-gray-900 font-bold text-sm">About</a>
           <a href="#" class="text-gray-900 font-bold text-sm">Community</a>
         </div>
-        <div class="flex flex-row justify-between items-center mt-5">
-
+        <div class="flex flex-row justify-around items-center mt-5">
+          <FacebookIcon/>
+          <InstagramIcon/>
+          <YoutubeIcon/>
         </div>
       </div>
 
@@ -110,10 +118,17 @@ import AvatarIcon from "./components/icons/AvatarIcon.vue";
 import axios from "axios";
 import CheckIcon from "./components/icons/CheckIcon.vue";
 import BookmarkIcon from "./components/icons/BookmarkIcon.vue";
+import FacebookIcon from "./components/icons/FacebookIcon.vue";
+import InstagramIcon from "./components/icons/InstagramIcon.vue";
+import YoutubeIcon from "./components/icons/YoutubeIcon.vue";
+import {BlogCreateCommentRequest} from "./libs/Api/Blog";
 
 export default {
   title: 'Vue-Task - Blog',
   components: {
+    YoutubeIcon,
+    InstagramIcon,
+    FacebookIcon,
     BookmarkIcon,
     CheckIcon,
     ArrowLeftIcon,
@@ -140,6 +155,24 @@ export default {
       } catch (e) {
         console.log(e)
       }
+    },
+    async submitComment(){
+      let _this = this;
+
+      let data = {
+        text : _this.text
+      }
+
+      let blogCreateCommentRequest = new BlogCreateCommentRequest(_this);
+      blogCreateCommentRequest.setParams(1);
+      blogCreateCommentRequest.setRequestParam(data);
+      await blogCreateCommentRequest.fetch(function (content){
+        // console.log(content)
+        _this.text = "";
+      },function (error){
+        _this.text = "";
+        console.log(error)
+      })
     },
   },
 }

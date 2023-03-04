@@ -3,9 +3,11 @@ import WebServiceRequest from '../Api/WebServiceRequest'
 class BlogCreateCommentRequest extends WebServiceRequest {
     constructor (context) {
         super(context)
-        super.setTag('Posts/CreateBlog')
     }
-    setParams(data){
+    setParams(id){
+        super.setTag('posts/'+id+'/comment')
+    }
+    setRequestParam(data){
         super.setRequestParamDataObj(data)
     }
 }

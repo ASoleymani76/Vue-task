@@ -89,6 +89,9 @@ class WebServiceRequest {
                 // referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
                 body: JSON.stringify(this.getData()) // body data type must match "Content-Type" header
             }).then(function (response) {
+                if (response.status === 201) {
+                    alert("Your Comment submitted");
+                }
                 if (response.status === 401) {
 
                     // Remove userData from localStorage
@@ -111,7 +114,7 @@ class WebServiceRequest {
                 errorCallback(_data)
             }
         } catch (e) {
-            Helper.closeLoadingOverlay(this.context);
+            // Helper.closeLoadingOverlay(this.context);
             console.log(e)
         }
     }
