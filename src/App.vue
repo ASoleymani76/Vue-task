@@ -1,24 +1,60 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-<!--  <header>-->
-<!--&lt;!&ndash;    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />&ndash;&gt;-->
+  <div id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen bg-gray-100 shadow-sm">
 
-<!--    <div class="wrapper">-->
-<!--&lt;!&ndash;      <HelloWorld msg="You did it!" />&ndash;&gt;-->
+    <section class="h-auto w-full grid grid-cols-1 gap-6">
 
-<!--      <nav>-->
-<!--&lt;!&ndash;        <RouterLink to="/">Home</RouterLink>&ndash;&gt;-->
-<!--&lt;!&ndash;        <RouterLink to="/about">About</RouterLink>&ndash;&gt;-->
-<!--      </nav>-->
-<!--    </div>-->
-<!--  </header>-->
+      <div class="col-span-12 relative">
+        <div class="w-full flex justify-between absolute top-10 left-0 z-10 px-10">
+          <span><ArrowLeftIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
+          <span><HeartIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
+        </div>
+        <img src="@/assets/img/post-bg.jpg" alt="Blog Pic" class="w-full transition-all mx-auto md:max-h-[25rem] object-cover">
+      </div>
 
-  <RouterView />
+      <div class="col-span-12 relative">
+        <span>
+
+        </span>
+      </div>
+    </section>
+
+  </div>
+<!--  <RouterView />-->
 </template>
+
+<script>
+// import { RouterLink, RouterView } from 'vue-router'
+import ArrowLeftIcon from "./components/icons/ArrowLeftIcon.vue";
+import HeartIcon from "./components/icons/HeartIcon.vue";
+import axios from "axios";
+
+export default {
+  title: 'Vue-Task - Blog',
+  components:{
+    ArrowLeftIcon,
+    HeartIcon
+  },
+  data(){
+    return{
+      posts:[],
+    }
+  },
+  async created(){
+    await this.getPosts();
+  },
+  methods:{
+    async getPosts(){
+      try {
+        let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
+        this.posts = response.data;
+        console.log(response.data);
+      }catch (e){
+        console.log(e)
+      }
+    }
+  }
+}
+</script>
 
 <style scoped>
 header {
