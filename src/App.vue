@@ -1,20 +1,37 @@
 <template>
-  <div id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen bg-gray-100 shadow-sm">
+  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl">
 
-    <section class="h-auto w-full grid grid-cols-1 gap-6">
+    <section class="h-auto w-full grid grid-cols-1">
 
-      <div class="col-span-12 relative">
-        <div class="w-full flex justify-between absolute top-10 left-0 z-10 px-10">
+      <div class="relative">
+        <div class="w-full flex justify-between absolute top-0 overlay-f pt-10 max-h-[10rem] left-0 z-10 px-10">
           <span><ArrowLeftIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
           <span><HeartIcon class="w-8 h-8 text-gray-700 fill-white"/></span>
         </div>
         <img src="@/assets/img/post-bg.jpg" alt="Blog Pic" class="w-full transition-all mx-auto md:max-h-[25rem] object-cover">
       </div>
 
-      <div class="col-span-12 relative">
-        <span>
+      <div id="tags" class="grid grid-cols-1 p-10">
+        <div class="col-span-12">
+          <span v-for="(tag,idx) in posts.tags" :key="idx" :class="idx !== 1 ? '' : 'mx-1'" class="text-violet-600 text-sm font-bold rounded-lg bg-violet-300 px-2 py-1 ">{{ tag }}</span>
+        </div>
 
-        </span>
+        <div id="title" class="col-span-12 mt-5">
+          <h1 class="text-xl font-bold text-gray-800">
+            {{ posts.title }}
+          </h1>
+        </div>
+
+        <div id="author" class="col-span-12 flex flex-row justify-start mt-5">
+          <span>
+            <AvatarIcon class="w-14 h-14"/>
+          </span>
+          <div class="flex flex-col justify-between  ml-5">
+            <span class="text-lg text-gray-700">By {{ posts.author }}</span>
+            <span class="text-sm text-gray-500">{{ new Date(posts.date)}}</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -26,17 +43,19 @@
 // import { RouterLink, RouterView } from 'vue-router'
 import ArrowLeftIcon from "./components/icons/ArrowLeftIcon.vue";
 import HeartIcon from "./components/icons/HeartIcon.vue";
+import AvatarIcon from "./components/icons/AvatarIcon.vue";
 import axios from "axios";
 
 export default {
   title: 'Vue-Task - Blog',
   components:{
     ArrowLeftIcon,
-    HeartIcon
+    HeartIcon,
+    AvatarIcon
   },
   data(){
     return{
-      posts:[],
+      posts:null,
     }
   },
   async created(){
