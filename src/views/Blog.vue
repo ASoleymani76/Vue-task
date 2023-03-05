@@ -148,7 +148,6 @@ export default {
         let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
         this.posts = response.data;
         this.comments = response.data.comments;
-        console.log(response.data);
       } catch (e) {
         console.log(e)
       }
