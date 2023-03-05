@@ -1,5 +1,5 @@
 <template>
-  <div v-if="posts" id="main" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl bg-white">
+  <main v-if="posts" id="main" :class="{'loading-skeleton':isLoading}" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl bg-white">
 
     <section class="h-auto w-full grid grid-cols-1">
 
@@ -94,7 +94,7 @@
     </section>
 
     <Footer/>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -118,6 +118,7 @@ export default {
   },
   data() {
     return {
+      isLoading:false,
       posts: null,
       comments: [],
       text: '',
@@ -129,10 +130,13 @@ export default {
   methods: {
     async getPosts() {
       try {
+        this.isLoading = true;
         let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
         this.posts = response.data;
         this.comments = response.data.comments;
+        this.isLoading = false;
       } catch (e) {
+        this.isLoading = false;
         console.log(e)
       }
     },
