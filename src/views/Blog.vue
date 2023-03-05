@@ -163,7 +163,6 @@ export default {
       blogCreateCommentRequest.setParams(1);
       blogCreateCommentRequest.setRequestParam(data);
       await blogCreateCommentRequest.fetch(function (content){
-        // console.log(content)
         _this.text = "";
       },function (error){
         _this.text = "";
