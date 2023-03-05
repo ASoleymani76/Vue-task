@@ -1,5 +1,6 @@
 <template>
-  <main v-if="posts" id="main" :class="{'loading-skeleton':isLoading}" class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl bg-white">
+  <main v-if="posts" id="main" :class="{'loading-skeleton':isLoading}"
+        class="w-full 2xl:w-7/12 mx-auto overflow-x-hidden min-h-screen shadow-xl bg-white">
 
     <section class="h-auto w-full grid grid-cols-1">
 
@@ -86,7 +87,8 @@
               <span class="text-xs text-gray-500">{{ prettyTime(comment.date) }}</span>
             </div>
           </div>
-          <div class="w-full md:w-1/2 rounded-r-full rounded-bl-full py-4 px-5 text-base text-gray-600 bg-gray-100 mt-4">
+          <div
+              class="w-full md:w-1/2 rounded-r-full rounded-bl-full py-4 px-5 text-base text-gray-600 bg-gray-100 mt-4">
             {{ comment.text }}
           </div>
         </div>
@@ -106,6 +108,8 @@ import AvatarIcon from "../components/icons/AvatarIcon.vue";
 import axios from "axios";
 import {BlogCreateCommentRequest} from "../libs/Api/Blog";
 import Footer from "../components/Footer.vue";
+import {useToast} from "vue-toastification";
+
 export default {
   title: 'Vue-Task - Blog',
   components: {
@@ -118,10 +122,11 @@ export default {
   },
   data() {
     return {
-      isLoading:false,
+      isLoading: false,
       posts: null,
       comments: [],
       text: '',
+      toast: useToast()
     }
   },
   async created() {
@@ -140,25 +145,26 @@ export default {
         console.log(e)
       }
     },
-    async submitComment(){
+    async submitComment() {
       let _this = this;
 
       let data = {
-        text : _this.text
+        text: _this.text
       }
 
       let blogCreateCommentRequest = new BlogCreateCommentRequest(_this);
       blogCreateCommentRequest.setParams(1);
       blogCreateCommentRequest.setRequestParam(data);
-      await blogCreateCommentRequest.fetch(function (content){
+      await blogCreateCommentRequest.fetch(function (content) {
         _this.text = "";
-      },function (error){
+        _this.toast.success('Your Comment has been submitted');
+      }, function (error) {
         _this.text = "";
         console.log(error)
       })
     },
-    prettyTime(date){
-      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    prettyTime(date) {
+      let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
       return new Date(date).toLocaleDateString("en-US", options)
     },
   },

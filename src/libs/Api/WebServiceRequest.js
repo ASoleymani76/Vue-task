@@ -2,6 +2,7 @@
 
 /* eslint-disable */
 import axios from "axios";
+import {useToast} from "vue-toastification";
 import Helper from "../Helper";
 // import store from "@/store";
 
@@ -70,7 +71,8 @@ class WebServiceRequest {
     }
 
     async fetch(successCallback, errorCallback) {
-        // const _this = this
+        const _this = this;
+
         try {
             const _data = await fetch(this.getUrl(), {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -90,7 +92,7 @@ class WebServiceRequest {
                 body: JSON.stringify(this.getData()) // body data type must match "Content-Type" header
             }).then(function (response) {
                 if (response.status === 201) {
-                    alert("Your Comment submitted");
+                    return successCallback ()
                 }
                 if (response.status === 401) {
 
@@ -104,7 +106,7 @@ class WebServiceRequest {
                     this.context.$router.back();
                 }
                 if (response.status === 400) {
-                    return _this.context.$toast.error("Data is not correct!");
+                    // return _this.context.$toast.error("Data is not correct!");
                 }
                 return response.json()
             })
