@@ -106,7 +106,7 @@ import ArrowLeftIcon from "../components/icons/ArrowLeftIcon.vue";
 import HeartIcon from "../components/icons/HeartIcon.vue";
 import AvatarIcon from "../components/icons/AvatarIcon.vue";
 import axios from "axios";
-import {BlogCreateCommentRequest} from "../libs/Api/Blog";
+import {BlogCreateCommentRequest , BlogGetRequest} from "../libs/Api/Blog";
 import Footer from "../components/Footer.vue";
 import {useToast} from "vue-toastification";
 
@@ -134,16 +134,18 @@ export default {
   },
   methods: {
     async getPosts() {
-      try {
-        this.isLoading = true;
-        let response = await axios.get('https://stoplight.io/mocks/diginext-interview/website-interviews/144194864/posts/1');
-        this.posts = response.data;
-        this.comments = response.data.comments;
+      let _this = this;
+      _this.isLoading = true;
+
+      let blogGetRequest = new BlogGetRequest(_this);
+      await blogGetRequest.get(function (content) {
+        _this.posts = content;
+        _this.comments = content.comments;
+        _this.isLoading = false;
+      }, function (error) {
         this.isLoading = false;
-      } catch (e) {
-        this.isLoading = false;
-        console.log(e)
-      }
+        console.log(error)
+      })
     },
     async submitComment() {
       let _this = this;
