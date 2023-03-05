@@ -91,28 +91,13 @@
           </div>
         </div>
       </div>
-
-      <div class="grid grid-cols-1 bg-gray-100 px-10 py-5 mt-5">
-        <span class="text-gray-700 font-semibold text-lg">Company</span>
-        <div class="flex flex-row justify-between items-center mt-5">
-          <a href="#" class="text-gray-900 font-bold text-sm">About</a>
-          <a href="#" class="text-gray-900 font-bold text-sm">Community</a>
-        </div>
-        <div class="flex flex-row justify-center space-x-10 items-center mt-5">
-          <FacebookIcon/>
-          <InstagramIcon/>
-          <YoutubeIcon/>
-        </div>
-      </div>
-
     </section>
+
+    <Footer/>
   </div>
 </template>
 
 <script>
-import YoutubeIcon from "../components/icons/YoutubeIcon.vue";
-import InstagramIcon from "../components/icons/InstagramIcon.vue";
-import FacebookIcon from "../components/icons/FacebookIcon.vue";
 import BookmarkIcon from "../components/icons/BookmarkIcon.vue";
 import CheckIcon from "../components/icons/CheckIcon.vue";
 import ArrowLeftIcon from "../components/icons/ArrowLeftIcon.vue";
@@ -120,12 +105,11 @@ import HeartIcon from "../components/icons/HeartIcon.vue";
 import AvatarIcon from "../components/icons/AvatarIcon.vue";
 import axios from "axios";
 import {BlogCreateCommentRequest} from "../libs/Api/Blog";
+import Footer from "../components/Footer.vue";
 export default {
   title: 'Vue-Task - Blog',
   components: {
-    YoutubeIcon,
-    InstagramIcon,
-    FacebookIcon,
+    Footer,
     BookmarkIcon,
     CheckIcon,
     ArrowLeftIcon,
