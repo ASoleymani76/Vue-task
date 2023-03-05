@@ -143,7 +143,7 @@ export default {
         _this.comments = content.comments;
         _this.isLoading = false;
       }, function (error) {
-        this.isLoading = false;
+        _this.isLoading = false;
         console.log(error)
       })
     },
